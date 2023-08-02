@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <!-- Optionally include any additional trust anchors for your server -->
+            <!-- For example, if your server uses a self-signed certificate -->
+            <!--<certificates src="@raw/my_certificate"/>-->
+        </trust-anchors>
+    </base-config>
+</network-security-config>
