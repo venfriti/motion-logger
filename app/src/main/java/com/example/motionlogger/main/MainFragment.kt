@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.example.motionlogger.NetworkResult
 import com.example.motionlogger.R
 import com.example.motionlogger.databinding.FragmentMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +33,7 @@ class MainFragment : Fragment() {
     private lateinit var sendButton: Button
 
     private var sending = false
-    private val sendInterval = 1000L
+    private val sendInterval = 500L
 
     private val a = 'f'
     private val b = 'g'
@@ -71,45 +72,21 @@ class MainFragment : Fragment() {
     private fun startSendingData(url: String) {
         CoroutineScope(Dispatchers.Main).launch {
             while (sending) {
-                fetchData(url)
-                delay(sendInterval)
+                when (val result = viewModel.fetchData(url)) {
+                    is NetworkResult.Success -> {
+                        delay(sendInterval)
+                    }
+                    is NetworkResult.Error ->{
+                        sending = false
+                        showToast(result.message)
+                        sendButton.text = getString(R.string.start)
+                    }
+                }
+
             }
         }
     }
 
-    private suspend fun fetchData(url: String): String {
-        return withContext(Dispatchers.IO) {
-            try {
-                val urlConnection = URL(url).openConnection() as HttpURLConnection
-                urlConnection.connectTimeout = 5000
-                urlConnection.readTimeout = 5000
-
-                val inputStream = urlConnection.inputStream
-                val reader = BufferedReader(InputStreamReader(inputStream))
-                val response = StringBuilder()
-                var line: String?
-
-                while (reader.readLine().also { line = it } != null) {
-                    response.append(line)
-                }
-
-                reader.close()
-                urlConnection.disconnect()
-
-                val responseData = response.toString()
-                Log.d("Server Response", responseData)
-                response.toString()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                activity?.runOnUiThread{
-                    showToast("Invalid Link: $e")
-                    sending = false
-                    sendButton.text = getString(R.string.start)
-                }
-                ""
-            }
-        }
-    }
 
     private fun hideSoftKeyboard() {
         val imm =
