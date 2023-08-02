@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MotionLogger</string>
+    <string name="enter_url">Enter url</string>
+    <string name="start">Start</string>
 </resources>
