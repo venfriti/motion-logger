@@ -1,9 +1,17 @@
 package com.example.motionlogger.main
 
+import android.Manifest
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,20 +21,21 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.example.motionlogger.BuildConfig
+//import com.example.motionlogger.BuildConfig
 import com.example.motionlogger.NetworkResult
 import com.example.motionlogger.R
 import com.example.motionlogger.Sensors
 import com.example.motionlogger.databinding.FragmentMainBinding
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
+
 
 class MainFragment : Fragment() {
 
@@ -46,11 +55,14 @@ class MainFragment : Fragment() {
     private var d = ""
     private var e = ""
     private var f = ""
+    private var g = ""
+    private var h = ""
 
 
     private lateinit var urlString: String
     private lateinit var urlWithParameter: String
 
+    private lateinit var locationManager: LocationManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,11 +78,44 @@ class MainFragment : Fragment() {
         inputEditText = binding.editText
         sendButton = binding.button
 
+        locationManager = requireContext()
+            .getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+                if (isGranted) {
+                    startLocationUpdates()
+                } else {
+                    Snackbar.make(
+                        requireView(),
+                        R.string.permission_denied_explanation,
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction(R.string.settings) {
+                            startActivity(Intent().apply {
+                                action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            })
+                        }.show()
+                }
+            }
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        } else {
+            startLocationUpdates()
+        }
 
         if (hasGyroscopeSensor()){
             viewModel.gyroX.observe(viewLifecycleOwner) {
@@ -112,7 +157,7 @@ class MainFragment : Fragment() {
                 hideSoftKeyboard()
                 urlString = inputEditText.text.toString()
                 sendButton.text = getString(R.string.stop)
-                urlWithParameter = "$urlString?a=$a&b=$b&c=$c&d=$d&e=$e&f=$f"
+                urlWithParameter = "$urlString?a=$a&b=$b&c=$c&d=$d&e=$e&f=$f&g=$g&h=$h"
                 startSendingData()
             } else {
                 sending = false
@@ -128,7 +173,7 @@ class MainFragment : Fragment() {
             while (sending) {
                 when (val result = viewModel.fetchData(urlWithParameter)) {
                     is NetworkResult.Success -> {
-                        urlWithParameter = "$urlString?a=$a&b=$b&c=$c&d=$d&e=$e&f=$f"
+                        urlWithParameter = "$urlString?a=$a&b=$b&c=$c&d=$d&e=$e&f=$f&g=$g&h=$h"
                         delay(sendInterval)
                     }
                     is NetworkResult.Error ->{
@@ -140,6 +185,32 @@ class MainFragment : Fragment() {
 
             }
         }
+    }
+
+    private fun startLocationUpdates() {
+        try {
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                500L,  // minimum time interval between updates in milliseconds
+                0f,    // minimum distance between updates in meters
+                locationListener
+            )
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+        }
+    }
+
+    private val locationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            val latitude = location.latitude
+            val longitude = location.longitude
+
+            // Update UI with latitude and longitude
+            g = String.format("%.6f", latitude)
+            h = String.format("%.6f", longitude)
+        }
+        override fun onProviderEnabled(provider: String) {}
+        override fun onProviderDisabled(provider: String) {}
     }
 
     private fun hasGyroscopeSensor(): Boolean {

@@ -3,4 +3,6 @@
     <string name="enter_url">Enter url</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="permission_denied_explanation">You need to grant location permission in order to enable longitude and latitude.</string>
+    <string name="settings">Settings</string>
 </resources>
