@@ -108,7 +108,7 @@ class MainFragment : Fragment() {
                 urlString = inputEditText.text.toString()
                 sendButton.text = getString(R.string.stop)
                 urlWithParameter = "$urlString?a=$a&b=$b"
-                startSendingData(urlWithParameter)
+                startSendingData()
             } else {
                 sending = false
                 sendButton.text = getString(R.string.start)
@@ -118,11 +118,12 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun startSendingData(url: String) {
+    private fun startSendingData() {
         CoroutineScope(Dispatchers.Main).launch {
             while (sending) {
-                when (val result = viewModel.fetchData(url)) {
+                when (val result = viewModel.fetchData(urlWithParameter)) {
                     is NetworkResult.Success -> {
+                        urlWithParameter = "$urlString?a=$a&b=$b"
                         delay(sendInterval)
                     }
                     is NetworkResult.Error ->{
