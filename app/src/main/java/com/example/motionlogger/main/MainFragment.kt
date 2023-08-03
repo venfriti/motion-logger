@@ -40,10 +40,13 @@ class MainFragment : Fragment() {
     private var sending = false
     private val sendInterval = 500L
 
-    private lateinit var a : String
-//    private lateinit var b : String
-
+    private var a = ""
     private var b = ""
+    private var c = ""
+    private var d = ""
+    private var e = ""
+    private var f = ""
+
 
     private lateinit var urlString: String
     private lateinit var urlWithParameter: String
@@ -60,29 +63,6 @@ class MainFragment : Fragment() {
 
         sensors = Sensors(requireContext(), viewModel)
 
-
-//        if (hasGyroscopeSensor()){
-//            viewModel.gyroX.observe(viewLifecycleOwner) {
-//                a = String.format("%.4f", it)
-//            }
-//
-//            viewModel.gyroY.observe(viewLifecycleOwner) {
-//                b = String.format("%.4f", it)
-//            }
-//
-//            viewModel.gyroZ.observe(viewLifecycleOwner) {
-//                binding.gyroscopeZText.text = String.format("%.4f", it)
-//            }
-
-//        } else {
-//            binding.gyroscopeXText.text = "0.0"
-//            binding.gyroscopeYText.text = "0.0"
-//            binding.gyroscopeZText.text = "0.0"
-//
-//            Toast.makeText(requireContext(), "The device does not have a gyroscope", Toast.LENGTH_LONG)
-//                .show()
-//        }
-
         inputEditText = binding.editText
         sendButton = binding.button
 
@@ -91,14 +71,39 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (hasGyroscopeSensor()){
+            viewModel.gyroX.observe(viewLifecycleOwner) {
+                a = String.format("%.4f", it)
+            }
+
+            viewModel.gyroY.observe(viewLifecycleOwner) {
+                b = String.format("%.4f", it)
+            }
+
+            viewModel.gyroZ.observe(viewLifecycleOwner) {
+                c = String.format("%.4f", it)
+            }
+
+        } else {
+            a = "0.00"
+            b = "0.00"
+            c = "0.00"
+
+            Toast.makeText(requireContext(), "The device does not have a gyroscope", Toast.LENGTH_LONG).show()
+        }
         viewModel.accelX.observe(viewLifecycleOwner) {
-            a = String.format("%.4f", it)
+            d = String.format("%.4f", it)
             binding.accelX.text = String.format("%.4f", it)
         }
 
         viewModel.accelY.observe(viewLifecycleOwner) {
-            b = String.format("%.4f", it)
+            e = String.format("%.4f", it)
             binding.accelY.text = String.format("%.4f", it)
+        }
+
+        viewModel.accelZ.observe(viewLifecycleOwner) {
+            f = String.format("%.4f", it)
         }
 
         sendButton.setOnClickListener {
@@ -107,7 +112,7 @@ class MainFragment : Fragment() {
                 hideSoftKeyboard()
                 urlString = inputEditText.text.toString()
                 sendButton.text = getString(R.string.stop)
-                urlWithParameter = "$urlString?a=$a&b=$b"
+                urlWithParameter = "$urlString?a=$a&b=$b&c=$c&d=$d&e=$e&f=$f"
                 startSendingData()
             } else {
                 sending = false
@@ -123,7 +128,7 @@ class MainFragment : Fragment() {
             while (sending) {
                 when (val result = viewModel.fetchData(urlWithParameter)) {
                     is NetworkResult.Success -> {
-                        urlWithParameter = "$urlString?a=$a&b=$b"
+                        urlWithParameter = "$urlString?a=$a&b=$b&c=$c&d=$d&e=$e&f=$f"
                         delay(sendInterval)
                     }
                     is NetworkResult.Error ->{
@@ -165,6 +170,4 @@ class MainFragment : Fragment() {
         super.onPause()
         sensors.stopListening()
     }
-
-
 }
