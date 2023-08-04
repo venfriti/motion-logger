@@ -23,12 +23,9 @@ class Sensors(context: Context, private val viewModel: MainViewModel) : SensorEv
         }
 
         if (event.sensor == accelerometerSensor){
-            val accel1 = event.values[0]
-            val accel2 = event.values[1]
+            viewModel.accelX.value = event.values[0]
+            viewModel.accelY.value = event.values[1]
             viewModel.accelZ.value = event.values[2]
-
-            viewModel.accelX.value = accel1
-            viewModel.accelY.value = accel2
         }
 
     }

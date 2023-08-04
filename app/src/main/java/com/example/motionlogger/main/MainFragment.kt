@@ -12,7 +12,6 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +24,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.motionlogger.BuildConfig
-//import com.example.motionlogger.BuildConfig
 import com.example.motionlogger.NetworkResult
 import com.example.motionlogger.R
 import com.example.motionlogger.Sensors
@@ -47,7 +45,7 @@ class MainFragment : Fragment() {
     private lateinit var sendButton: Button
 
     private var sending = false
-    private val sendInterval = 500L
+    private val sendInterval = 250L
 
     private var a = ""
     private var b = ""
