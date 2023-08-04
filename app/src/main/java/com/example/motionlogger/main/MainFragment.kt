@@ -120,14 +120,17 @@ class MainFragment : Fragment() {
         if (hasGyroscopeSensor()){
             viewModel.gyroX.observe(viewLifecycleOwner) {
                 a = String.format("%.4f", it)
+                binding.gyroscopeXText.text = a
             }
 
             viewModel.gyroY.observe(viewLifecycleOwner) {
                 b = String.format("%.4f", it)
+                binding.gyroscopeYText.text = b
             }
 
             viewModel.gyroZ.observe(viewLifecycleOwner) {
                 c = String.format("%.4f", it)
+                binding.gyroscopeZText.text = c
             }
 
         } else {
@@ -135,20 +138,25 @@ class MainFragment : Fragment() {
             b = "0.00"
             c = "0.00"
 
+            binding.gyroscopeXText.text = a
+            binding.gyroscopeYText.text = b
+            binding.gyroscopeZText.text = c
+
             Toast.makeText(requireContext(), "The device does not have a gyroscope", Toast.LENGTH_LONG).show()
         }
         viewModel.accelX.observe(viewLifecycleOwner) {
             d = String.format("%.4f", it)
-            binding.accelX.text = String.format("%.4f", it)
+            binding.accelerometerXText.text = d
         }
 
         viewModel.accelY.observe(viewLifecycleOwner) {
             e = String.format("%.4f", it)
-            binding.accelY.text = String.format("%.4f", it)
+            binding.accelerometerYText.text = e
         }
 
         viewModel.accelZ.observe(viewLifecycleOwner) {
             f = String.format("%.4f", it)
+            binding.accelerometerZAxis.text = f
         }
 
         sendButton.setOnClickListener {
@@ -163,9 +171,7 @@ class MainFragment : Fragment() {
                 sending = false
                 sendButton.text = getString(R.string.start)
             }
-
         }
-
     }
 
     private fun startSendingData() {
@@ -206,8 +212,8 @@ class MainFragment : Fragment() {
             val longitude = location.longitude
 
             // Update UI with latitude and longitude
-            g = String.format("%.6f", latitude)
-            h = String.format("%.6f", longitude)
+            g = String.format("%.8f", latitude)
+            h = String.format("%.8f", longitude)
         }
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
