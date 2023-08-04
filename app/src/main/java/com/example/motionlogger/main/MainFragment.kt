@@ -212,8 +212,12 @@ class MainFragment : Fragment() {
             val longitude = location.longitude
 
             // Update UI with latitude and longitude
-            g = String.format("%.8f", latitude)
-            h = String.format("%.8f", longitude)
+            g = String.format("%.6f", longitude)
+            h = String.format("%.6f", latitude)
+
+
+            binding.longitudeText.text = g
+            binding.latitudeText.text = h
         }
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}

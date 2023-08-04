@@ -7,9 +7,12 @@
     <string name="settings">Settings</string>
     <string name="motion_sensor_image">motion sensor image</string>
     <string name="accelerometer_z_axis">Accelerometer z-axis:</string>
-    <string name="gyroscope_angle_z">"Gyroscope angle-z: "</string>
-    <string name="accelerometer_y_axis">Accelerometer y-axis</string>
+    <string name="gyroscope_angle_z">"Gyroscope angle-z:"</string>
+    <string name="accelerometer_y_axis">Accelerometer y-axis:</string>
     <string name="gyroscope_angle_y">Gyroscope angle-y:</string>
     <string name="accelerometer_x_axis">Accelerometer x-axis:</string>
-    <string name="gyroscope_angle_x">Gyroscope angle-x</string>
+    <string name="gyroscope_angle_x">Gyroscope angle-x:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="latitude">Latitude:</string>
+    <string name="fetching_location">Fetching Location</string>
 </resources>

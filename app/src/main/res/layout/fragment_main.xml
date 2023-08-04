@@ -42,25 +42,29 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/layout_height"
             android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
             android:hint="@string/enter_url"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:importantForAutofill="no"
+            android:inputType="textUri"
+            app:layout_constraintBottom_toTopOf="@+id/gyroscope_x"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:inputType="textUri"
-            android:importantForAutofill="no" />
+            app:layout_constraintTop_toBottomOf="@+id/motionSensorImage" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/start"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/accelerometer_x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/editText"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/motionSensorImage" />
 
         <TextView
             android:id="@+id/gyroscope_x"
@@ -76,6 +80,7 @@
             style="@style/textProperties"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             app:layout_constraintStart_toEndOf="@id/gyroscope_x"
             app:layout_constraintTop_toBottomOf="@id/editText" />
 
@@ -84,6 +89,7 @@
             style="@style/textProperties"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/accelerometer_x_axis"
             app:layout_constraintEnd_toStartOf="@id/accelerometer_x_text"
             app:layout_constraintTop_toBottomOf="@id/editText" />
@@ -93,6 +99,7 @@
             style="@style/textProperties"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editText" />
 
@@ -163,6 +170,43 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/accelerometer_y_text" />
+
+        <TextView
+            android:id="@+id/longitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/textProperties"
+            android:text="@string/longitude"
+            app:layout_constraintBaseline_toBaselineOf="@id/longitudeText"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/longitudeText"
+            style="@style/textProperties"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/fetching_location"
+            app:layout_constraintStart_toEndOf="@+id/longitude"
+            app:layout_constraintTop_toBottomOf="@+id/accelerometer_z" />
+
+        <TextView
+            android:id="@+id/latitude"
+            style="@style/textProperties"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/latitude"
+            app:layout_constraintEnd_toStartOf="@+id/latitudeText"
+            app:layout_constraintTop_toBottomOf="@+id/accelerometer_z" />
+
+        <TextView
+            android:id="@+id/latitudeText"
+            style="@style/textProperties"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fetching_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accelerometer_z_axis" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
