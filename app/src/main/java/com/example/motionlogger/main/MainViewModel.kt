@@ -21,6 +21,12 @@ class MainViewModel : ViewModel(){
     var accelY = MutableLiveData<Float>()
     var accelZ = MutableLiveData<Float>()
 
+    var previousTimestamp: Long = 0L
+
+    val orientationAngles = MutableLiveData<FloatArray>().apply {
+        value = floatArrayOf(0f, 0f, 0f) // Initial orientation angles (roll, pitch, yaw)
+    }
+
     suspend fun fetchData(url: String): NetworkResult {
         return withContext(Dispatchers.IO) {
             try {

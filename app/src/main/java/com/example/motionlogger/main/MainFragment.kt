@@ -116,20 +116,30 @@ class MainFragment : Fragment() {
         }
 
         if (hasGyroscopeSensor()){
-            viewModel.gyroX.observe(viewLifecycleOwner) {
-                a = String.format("%.4f", it)
+            viewModel.orientationAngles.observe(viewLifecycleOwner) {
+                a = String.format("%.4f", it[0])
                 binding.gyroscopeXText.text = a
-            }
 
-            viewModel.gyroY.observe(viewLifecycleOwner) {
-                b = String.format("%.4f", it)
+                b = String.format("%.4f", it[1])
                 binding.gyroscopeYText.text = b
-            }
 
-            viewModel.gyroZ.observe(viewLifecycleOwner) {
-                c = String.format("%.4f", it)
+                c = String.format("%.4f", it[2])
                 binding.gyroscopeZText.text = c
             }
+//            viewModel.gyroX.observe(viewLifecycleOwner) {
+//                a = String.format("%.4f", it)
+//                binding.gyroscopeXText.text = a
+//            }
+//
+//            viewModel.gyroY.observe(viewLifecycleOwner) {
+//                b = String.format("%.4f", it)
+//                binding.gyroscopeYText.text = b
+//            }
+//
+//            viewModel.gyroZ.observe(viewLifecycleOwner) {
+//                c = String.format("%.4f", it)
+//                binding.gyroscopeZText.text = c
+//            }
 
         } else {
             a = "0.00"
