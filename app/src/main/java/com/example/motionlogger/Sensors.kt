@@ -14,6 +14,10 @@ class Sensors(context: Context, private val viewModel: MainViewModel) : SensorEv
 
     private val gyroscopeSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
     private val accelerometerSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+    private val rotationSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+
+    private val rotationMatrix = FloatArray(9)
+    private val orientationAngles = FloatArray(3)
 
     override fun onSensorChanged(event: SensorEvent) {
         if (event.sensor == gyroscopeSensor){
@@ -28,6 +32,18 @@ class Sensors(context: Context, private val viewModel: MainViewModel) : SensorEv
             viewModel.accelZ.value = event.values[2]
         }
 
+        if (event.sensor == rotationSensor){
+            val rotationVector = event.values
+
+            SensorManager.getRotationMatrixFromVector(rotationMatrix, rotationVector)
+            SensorManager.getOrientation(rotationMatrix, orientationAngles)
+
+            viewModel.rotX.value = Math.toDegrees(orientationAngles[0].toDouble()).toFloat()
+            viewModel.rotY.value = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
+            viewModel.rotZ.value = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
+
+        }
+
     }
 
     fun startListening() {
@@ -36,6 +52,10 @@ class Sensors(context: Context, private val viewModel: MainViewModel) : SensorEv
         }
 
         accelerometerSensor?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+
+        rotationSensor?.let {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
     }

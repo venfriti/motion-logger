@@ -115,33 +115,49 @@ class MainFragment : Fragment() {
             startLocationUpdates()
         }
 
-        if (hasGyroscopeSensor()){
-            viewModel.gyroX.observe(viewLifecycleOwner) {
-                a = String.format("%.4f", it)
-                binding.gyroscopeXText.text = a
-            }
+//        if (hasGyroscopeSensor()){
+//            viewModel.gyroX.observe(viewLifecycleOwner) {
+//                a = String.format("%.4f", it)
+//                binding.gyroscopeXText.text = a
+//            }
+//
+//            viewModel.gyroY.observe(viewLifecycleOwner) {
+//                b = String.format("%.4f", it)
+//                binding.gyroscopeYText.text = b
+//            }
+//
+//            viewModel.gyroZ.observe(viewLifecycleOwner) {
+//                c = String.format("%.4f", it)
+//                binding.gyroscopeZText.text = c
+//            }
+//
+//        } else {
+//            a = "0.00"
+//            b = "0.00"
+//            c = "0.00"
+//
+//            binding.gyroscopeXText.text = a
+//            binding.gyroscopeYText.text = b
+//            binding.gyroscopeZText.text = c
+//
+//            Toast.makeText(requireContext(), "The device does not have a gyroscope", Toast.LENGTH_LONG).show()
+//        }
 
-            viewModel.gyroY.observe(viewLifecycleOwner) {
-                b = String.format("%.4f", it)
-                binding.gyroscopeYText.text = b
-            }
-
-            viewModel.gyroZ.observe(viewLifecycleOwner) {
-                c = String.format("%.4f", it)
-                binding.gyroscopeZText.text = c
-            }
-
-        } else {
-            a = "0.00"
-            b = "0.00"
-            c = "0.00"
-
+        viewModel.rotX.observe(viewLifecycleOwner) {
+            a = String.format("%.2f", it)
             binding.gyroscopeXText.text = a
-            binding.gyroscopeYText.text = b
-            binding.gyroscopeZText.text = c
-
-            Toast.makeText(requireContext(), "The device does not have a gyroscope", Toast.LENGTH_LONG).show()
         }
+
+        viewModel.rotY.observe(viewLifecycleOwner) {
+            b = String.format("%.2f", it)
+            binding.gyroscopeYText.text = b
+        }
+
+        viewModel.rotZ.observe(viewLifecycleOwner) {
+            c = String.format("%.2f", it)
+            binding.gyroscopeZText.text = c
+        }
+
         viewModel.accelX.observe(viewLifecycleOwner) {
             d = String.format("%.4f", it)
             binding.accelerometerXText.text = d
@@ -158,7 +174,7 @@ class MainFragment : Fragment() {
         }
 
         sendButton.setOnClickListener {
-            if (!sending){
+            if (!sending) {
                 sending = true
                 hideSoftKeyboard()
                 urlString = inputEditText.text.toString()
@@ -180,7 +196,8 @@ class MainFragment : Fragment() {
                         urlWithParameter = "$urlString?a=$a&b=$b&c=$c&d=$d&e=$e&f=$f&g=$g&h=$h"
                         delay(sendInterval)
                     }
-                    is NetworkResult.Error ->{
+
+                    is NetworkResult.Error -> {
                         sending = false
                         showToast(result.message)
                         sendButton.text = getString(R.string.start)
@@ -217,6 +234,7 @@ class MainFragment : Fragment() {
             binding.longitudeText.text = g
             binding.latitudeText.text = h
         }
+
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
     }
@@ -225,7 +243,7 @@ class MainFragment : Fragment() {
         val sensorManager = requireActivity()
             .getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        val gyroscopeSensor : Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        val gyroscopeSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
 
         return gyroscopeSensor != null
     }
@@ -236,7 +254,7 @@ class MainFragment : Fragment() {
         imm.hideSoftInputFromWindow(binding.button.windowToken, 0)
     }
 
-    private fun showToast(message: String){
+    private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 

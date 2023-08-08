@@ -21,6 +21,10 @@ class MainViewModel : ViewModel(){
     var accelY = MutableLiveData<Float>()
     var accelZ = MutableLiveData<Float>()
 
+    var rotX = MutableLiveData<Float>()
+    var rotY = MutableLiveData<Float>()
+    var rotZ = MutableLiveData<Float>()
+
     suspend fun fetchData(url: String): NetworkResult {
         return withContext(Dispatchers.IO) {
             try {
