@@ -47,7 +47,7 @@ class MainFragment : Fragment() {
     private var sending = false
     private val sendInterval = 250L
 
-    private var a = ""
+    private var a = "0.0000"
     private var b = ""
     private var c = ""
     private var d = ""
@@ -115,47 +115,32 @@ class MainFragment : Fragment() {
             startLocationUpdates()
         }
 
-//        if (hasGyroscopeSensor()){
-//            viewModel.gyroX.observe(viewLifecycleOwner) {
-//                a = String.format("%.4f", it)
-//                binding.gyroscopeXText.text = a
-//            }
-//
-//            viewModel.gyroY.observe(viewLifecycleOwner) {
-//                b = String.format("%.4f", it)
-//                binding.gyroscopeYText.text = b
-//            }
-//
-//            viewModel.gyroZ.observe(viewLifecycleOwner) {
-//                c = String.format("%.4f", it)
-//                binding.gyroscopeZText.text = c
-//            }
-//
-//        } else {
-//            a = "0.00"
-//            b = "0.00"
-//            c = "0.00"
-//
-//            binding.gyroscopeXText.text = a
-//            binding.gyroscopeYText.text = b
-//            binding.gyroscopeZText.text = c
-//
-//            Toast.makeText(requireContext(), "The device does not have a gyroscope", Toast.LENGTH_LONG).show()
-//        }
+        if (hasGyroscopeSensor()){
+            viewModel.rotX.observe(viewLifecycleOwner) {
+                a = String.format("%.2f", it)
+                binding.gyroscopeXText.text = a
+            }
 
-        viewModel.rotX.observe(viewLifecycleOwner) {
-            a = String.format("%.2f", it)
+            viewModel.rotY.observe(viewLifecycleOwner) {
+                b = String.format("%.2f", it)
+                binding.gyroscopeYText.text = b
+            }
+
+            viewModel.rotZ.observe(viewLifecycleOwner) {
+                c = String.format("%.2f", it)
+                binding.gyroscopeZText.text = c
+            }
+
+        } else {
+            a = "0.0000"
+            b = "0.0000"
+            c = "0.0000"
+
             binding.gyroscopeXText.text = a
-        }
-
-        viewModel.rotY.observe(viewLifecycleOwner) {
-            b = String.format("%.2f", it)
             binding.gyroscopeYText.text = b
-        }
-
-        viewModel.rotZ.observe(viewLifecycleOwner) {
-            c = String.format("%.2f", it)
             binding.gyroscopeZText.text = c
+
+            Toast.makeText(requireContext(), "The device does not have a gyroscope", Toast.LENGTH_LONG).show()
         }
 
         viewModel.accelX.observe(viewLifecycleOwner) {

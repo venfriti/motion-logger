@@ -196,8 +196,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/latitude"
-            app:layout_constraintEnd_toStartOf="@+id/latitudeText"
-            app:layout_constraintTop_toBottomOf="@+id/accelerometer_z" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/longitude" />
 
         <TextView
             android:id="@+id/latitudeText"
@@ -205,8 +205,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fetching_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/accelerometer_z_axis" />
+            app:layout_constraintStart_toEndOf="@+id/latitude"
+            app:layout_constraintTop_toBottomOf="@+id/longitudeText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
