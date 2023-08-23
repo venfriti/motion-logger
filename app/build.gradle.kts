@@ -29,8 +29,12 @@ android {
     }
     buildFeatures {
         buildConfig = true
+        compose = true
         //noinspection DataBindingWithoutKapt
         dataBinding = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.7"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -42,6 +46,17 @@ android {
 }
 
 dependencies {
+    implementation(platform("androidx.compose:compose-bom:2022.10.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
+
+    implementation("androidx.compose.runtime:runtime")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.foundation:foundation")
+    implementation("androidx.compose.foundation:foundation-layout")
+    implementation("androidx.compose.material:material")
+    implementation("androidx.compose.runtime:runtime-livedata")
+    implementation("androidx.compose.ui:ui-tooling")
+    implementation("androidx.activity:activity-compose:1.7.2")
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
