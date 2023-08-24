@@ -9,6 +9,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,18 +34,41 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.motionlogger.ui.theme.MotionLoggerTheme
+import com.example.motionlogger.ui.theme.Theme
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            RallyTab("Motion Logger", Icons.Filled.PieChart, {}, true)
+            Theme{
+                HeaderTab()
+            }
         }
     }
+}
+
+@Composable
+fun HeaderTab(modifier: Modifier = Modifier) {
+    Row(modifier
+        .padding(16.dp)
+        .animateContentSize()
+        .height(TabHeight)
+    ) {
+        Icon(imageVector = Icons.Filled.PieChart,
+            contentDescription = null,
+            tint = MaterialTheme.colors.onSurface)
+        Text("MotionLogger", color = MaterialTheme.colors.onSurface)
+    }
+}
+
+@Preview
+@Composable
+fun HeaderTabPreview() {
+    Theme { HeaderTab(Modifier.padding(8.dp)) }
 }
 
 @Composable
@@ -81,7 +105,7 @@ private fun RallyTab(
     onSelected: () -> Unit,
     selected: Boolean
 ) {
-    MotionLoggerTheme {
+    Theme {
         val color = MaterialTheme.colors.onSurface
         val durationMillis = if (selected) TabFadeInAnimationDuration else TabFadeOutAnimationDuration
         val animSpec = remember {

@@ -44,7 +44,7 @@ private val RobotoCondensed = FontFamily(
  * A [MaterialTheme] for Rally.
  */
 @Composable
-fun MotionLoggerTheme(content: @Composable () -> Unit) {
+fun Theme(content: @Composable () -> Unit) {
     // MotionLogger is always dark themed.
     val colors = darkColors(
         primary = Green500,
