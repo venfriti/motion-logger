@@ -2,68 +2,120 @@ package com.example.motionlogger
 
 
 import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.activity.ComponentActivity
-import androidx.compose.animation.animateColorAsState
+import androidx.activity.compose.setContent
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PieChart
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.motionlogger.ui.theme.Theme
-import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            Theme{
-                HeaderTab()
-            }
+            HeaderTab()
         }
     }
 }
 
 @Composable
 fun HeaderTab(modifier: Modifier = Modifier) {
-    Row(modifier
-        .padding(16.dp)
-        .animateContentSize()
-        .height(TabHeight)
-    ) {
-        Icon(imageVector = Icons.Filled.PieChart,
-            contentDescription = null,
-            tint = MaterialTheme.colors.onSurface)
-        Text("MotionLogger", color = MaterialTheme.colors.onSurface)
+    Theme{
+        Row(
+            modifier = modifier
+                .padding(16.dp)
+                .animateContentSize()
+                .height(TabHeight)
+                .fillMaxWidth()
+        ) {
+            Icon(imageVector = Icons.Filled.PieChart,
+                contentDescription = null,
+                tint = MaterialTheme.colors.onSurface)
+            Spacer(Modifier.width(12.dp))
+            Text("MotionLogger",
+                color = MaterialTheme.colors.onSurface,
+                style = MaterialTheme.typography.h5)
+        }
     }
 }
+
+@Composable
+fun InputDialog(modifier: Modifier = Modifier){
+    Row(
+        modifier = modifier
+            .padding(12.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        TextField(
+            value = "Enter Url",
+            onValueChange = {},
+            textStyle = TextStyle(MaterialTheme.colors.onSurface)
+        )
+        val onClickSeeAll = {}
+        TextButton(
+            onClick = onClickSeeAll,
+            contentPadding = PaddingValues(0.dp),
+            modifier = Modifier.align(Alignment.CenterVertically)
+        ) {
+            Text(
+                text = "SEE ALL",
+                style = MaterialTheme.typography.button
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun InputDialogPreview(){
+    InputDialog()
+}
+
+//@Composable
+//private fun AlertHeader(onClickSeeAll: () -> Unit) {
+//    Row(
+//        modifier = Modifier
+//            .padding(RallyDefaultPadding)
+//            .fillMaxWidth(),
+//        horizontalArrangement = Arrangement.SpaceBetween
+//    ) {
+//        Text(
+//            text = "Alerts",
+//            style = MaterialTheme.typography.subtitle2,
+//            modifier = Modifier.align(Alignment.CenterVertically)
+//        )
+//        TextButton(
+//            onClick = onClickSeeAll,
+//            contentPadding = PaddingValues(0.dp),
+//            modifier = Modifier.align(Alignment.CenterVertically)
+//        ) {
+//            Text(
+//                text = "SEE ALL",
+//                style = MaterialTheme.typography.button
+//            )
+//        }
+//    }
+//}
 
 @Preview
 @Composable
@@ -71,84 +123,4 @@ fun HeaderTabPreview() {
     Theme { HeaderTab(Modifier.padding(8.dp)) }
 }
 
-@Composable
-fun PlantDetailDescription() {
-    Surface {
-        Text("Hello Compose")
-    }
-}
-
-//@Composable
-//fun RallyTopAppBar() {
-//    Surface(
-//        Modifier
-//            .height(TabHeight)
-//            .fillMaxWidth()
-//    ) {
-//        Row(Modifier.selectableGroup()) {
-//            allScreens.forEach { screen ->
-//                RallyTab(
-//                    text = screen.name,
-//                    icon = screen.icon,
-//                    onSelected = { onTabSelected(screen) },
-//                    selected = currentScreen == screen
-//                )
-//            }
-//        }
-//    }
-//}
-
-@Composable
-private fun RallyTab(
-    text: String,
-    icon: ImageVector,
-    onSelected: () -> Unit,
-    selected: Boolean
-) {
-    Theme {
-        val color = MaterialTheme.colors.onSurface
-        val durationMillis = if (selected) TabFadeInAnimationDuration else TabFadeOutAnimationDuration
-        val animSpec = remember {
-            tween<Color>(
-                durationMillis = durationMillis,
-                easing = LinearEasing,
-                delayMillis = TabFadeInAnimationDelay
-            )
-        }
-        val tabTintColor by animateColorAsState(
-            targetValue = if (selected) color else color.copy(alpha = InactiveTabOpacity),
-            animationSpec = animSpec, label = ""
-        )
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .animateContentSize()
-                .height(TabHeight)
-                .selectable(
-                    selected = selected,
-                    onClick = onSelected,
-                    role = Role.Tab,
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(
-                        bounded = false,
-                        radius = Dp.Unspecified,
-                        color = Color.Unspecified
-                    )
-                )
-                .clearAndSetSemantics { contentDescription = text }
-        ) {
-            Icon(imageVector = icon, contentDescription = null, tint = tabTintColor)
-            if (selected) {
-                Spacer(Modifier.width(12.dp))
-                Text(text.uppercase(Locale.getDefault()), color = tabTintColor)
-            }
-        }
-    }
-}
-
 private val TabHeight = 56.dp
-private const val InactiveTabOpacity = 0.60f
-
-private const val TabFadeInAnimationDuration = 150
-private const val TabFadeInAnimationDelay = 100
-private const val TabFadeOutAnimationDuration = 100
