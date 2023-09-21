@@ -140,7 +140,7 @@ class MainFragment : Fragment() {
             binding.gyroscopeYText.text = b
             binding.gyroscopeZText.text = c
 
-            Toast.makeText(requireContext(), "The device does not have a gyroscope", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "The device does not have a magnetometer sensor", Toast.LENGTH_LONG).show()
         }
 
         viewModel.accelX.observe(viewLifecycleOwner) {
