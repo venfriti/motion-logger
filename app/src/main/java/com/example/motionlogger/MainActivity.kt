@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.example.motionlogger.ui.theme.AppTheme
 import com.example.motionlogger.ui.theme.Theme
 import java.util.Locale
 
@@ -47,12 +48,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            Column {
-                HeaderTab()
-                FullDialog()
+            AppTheme {
+                AppScreen()
             }
-
         }
+    }
+}
+
+@Composable
+fun AppScreen(){
+    Column {
+        HeaderTab()
+        FullDialog()
     }
 }
 
