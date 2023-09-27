@@ -21,6 +21,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -40,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.example.motionlogger.ui.theme.DarkBlue900
 import com.example.motionlogger.ui.theme.MotionLoggerTheme
 import java.util.Locale
 
@@ -48,7 +50,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             MotionLoggerTheme {
-                AppScreen()
+                Surface(
+                    color = DarkBlue900
+                ) {
+                    AppScreen()
+                }
+
             }
         }
     }
@@ -80,10 +87,14 @@ fun HeaderTab(modifier: Modifier = Modifier) {
             Spacer(Modifier.width(12.dp))
             Text("MotionLogger",
                 color = MaterialTheme.colorScheme.onSurface,
-//                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.titleLarge
             )
         }
     }
+}
+
+@Composable
+fun TopCard(modifier: Modifier = Modifier) {
 }
 
 @Composable
