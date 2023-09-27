@@ -1,155 +1,86 @@
-/*
- * Copyright 2021 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.motionlogger.ui.theme
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Typography
-import androidx.compose.material.darkColors
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.compositeOver
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.em
-import androidx.compose.ui.unit.sp
-import com.example.motionlogger.R
 
-val EczarFontFamily = FontFamily(
-    Font(R.font.eczar_regular),
-    Font(R.font.eczar_semibold, FontWeight.SemiBold)
+
+private val LightColors = lightColorScheme(
+    primary = md_theme_light_primary,
+    onPrimary = md_theme_light_onPrimary,
+    primaryContainer = md_theme_light_primaryContainer,
+    onPrimaryContainer = md_theme_light_onPrimaryContainer,
+    secondary = md_theme_light_secondary,
+    onSecondary = md_theme_light_onSecondary,
+    secondaryContainer = md_theme_light_secondaryContainer,
+    onSecondaryContainer = md_theme_light_onSecondaryContainer,
+    tertiary = md_theme_light_tertiary,
+    onTertiary = md_theme_light_onTertiary,
+    tertiaryContainer = md_theme_light_tertiaryContainer,
+    onTertiaryContainer = md_theme_light_onTertiaryContainer,
+    error = md_theme_light_error,
+    onError = md_theme_light_onError,
+    errorContainer = md_theme_light_errorContainer,
+    onErrorContainer = md_theme_light_onErrorContainer,
+    outline = md_theme_light_outline,
+    background = md_theme_light_background,
+    onBackground = md_theme_light_onBackground,
+    surface = md_theme_light_surface,
+    onSurface = md_theme_light_onSurface,
+    surfaceVariant = md_theme_light_surfaceVariant,
+    onSurfaceVariant = md_theme_light_onSurfaceVariant,
+    inverseSurface = md_theme_light_inverseSurface,
+    inverseOnSurface = md_theme_light_inverseOnSurface,
+    inversePrimary = md_theme_light_inversePrimary,
+    surfaceTint = md_theme_light_surfaceTint,
+    outlineVariant = md_theme_light_outlineVariant,
+    scrim = md_theme_light_scrim,
 )
-val RobotoCondensed = FontFamily(
-    Font(R.font.robotocondensed_regular),
-    Font(R.font.robotocondensed_light, FontWeight.Light),
-    Font(R.font.robotocondensed_bold, FontWeight.Bold)
+
+
+private val DarkColors = darkColorScheme(
+    primary = md_theme_dark_primary,
+    onPrimary = md_theme_dark_onPrimary,
+    primaryContainer = md_theme_dark_primaryContainer,
+    onPrimaryContainer = md_theme_dark_onPrimaryContainer,
+    secondary = md_theme_dark_secondary,
+    onSecondary = md_theme_dark_onSecondary,
+    secondaryContainer = md_theme_dark_secondaryContainer,
+    onSecondaryContainer = md_theme_dark_onSecondaryContainer,
+    tertiary = md_theme_dark_tertiary,
+    onTertiary = md_theme_dark_onTertiary,
+    tertiaryContainer = md_theme_dark_tertiaryContainer,
+    onTertiaryContainer = md_theme_dark_onTertiaryContainer,
+    error = md_theme_dark_error,
+    onError = md_theme_dark_onError,
+    errorContainer = md_theme_dark_errorContainer,
+    onErrorContainer = md_theme_dark_onErrorContainer,
+    outline = md_theme_dark_outline,
+    background = md_theme_dark_background,
+    onBackground = md_theme_dark_onBackground,
+    surface = md_theme_dark_surface,
+    onSurface = md_theme_dark_onSurface,
+    surfaceVariant = md_theme_dark_surfaceVariant,
+    onSurfaceVariant = md_theme_dark_onSurfaceVariant,
+    inverseSurface = md_theme_dark_inverseSurface,
+    inverseOnSurface = md_theme_dark_inverseOnSurface,
+    inversePrimary = md_theme_dark_inversePrimary,
+    surfaceTint = md_theme_dark_surfaceTint,
+    outlineVariant = md_theme_dark_outlineVariant,
+    scrim = md_theme_dark_scrim,
 )
 
-/**
- * A [MaterialTheme] for Rally.
- */
 @Composable
-fun Theme(content: @Composable () -> Unit) {
-    // MotionLogger is always dark themed.
-    val colors = darkColors(
-        primary = Green500,
-        surface = DarkBlue900,
-        onSurface = Color.White,
-        background = DarkBlue900,
-        onBackground = Color.White
-    )
+fun MotionLoggerTheme(
+  useDarkTheme: Boolean = isSystemInDarkTheme(),
+  content: @Composable() () -> Unit
+) {
+  val colors = DarkColors
 
-    val typography = Typography(
-        defaultFontFamily = RobotoCondensed,
-        h1 = TextStyle(
-            fontWeight = FontWeight.W100,
-            fontSize = 96.sp
-        ),
-        h2 = TextStyle(
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 44.sp,
-            fontFamily = EczarFontFamily,
-            letterSpacing = 1.5.sp
-        ),
-        h3 = TextStyle(
-            fontWeight = FontWeight.W400,
-            fontSize = 14.sp
-        ),
-        h4 = TextStyle(
-            fontWeight = FontWeight.W700,
-            fontSize = 34.sp
-        ),
-        h5 = TextStyle(
-            fontWeight = FontWeight.W700,
-            fontSize = 20.sp
-        ),
-        h6 = TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 18.sp,
-            lineHeight = 20.sp,
-            fontFamily = EczarFontFamily,
-            letterSpacing = 3.sp
-        ),
-        subtitle1 = TextStyle(
-            fontWeight = FontWeight.Light,
-            fontSize = 14.sp,
-            lineHeight = 20.sp,
-            letterSpacing = 3.sp
-        ),
-        subtitle2 = TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            letterSpacing = 0.1.em
-        ),
-        body1 = TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
-            letterSpacing = 0.1.em
-        ),
-        body2 = TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            lineHeight = 20.sp,
-            letterSpacing = 0.1.em
-        ),
-        button = TextStyle(
-            fontWeight = FontWeight.Bold,
-            fontSize = 14.sp,
-            lineHeight = 16.sp,
-            letterSpacing = 0.2.em
-        ),
-        caption = TextStyle(
-            fontWeight = FontWeight.W500,
-            fontSize = 12.sp
-        ),
-        overline = TextStyle(
-            fontWeight = FontWeight.W500,
-            fontSize = 10.sp
-        )
-    )
-    MaterialTheme(colors = colors, typography = typography, content = content)
-}
-
-/**
- * A theme overlay used for dialogs.
- */
-@Composable
-fun MotionLoggerThemeOverlay(content: @Composable () -> Unit) {
-    // MotionLogger is always dark themed.
-    val dialogColors = darkColors(
-        primary = Color.White,
-        surface = Color.White.copy(alpha = 0.12f).compositeOver(Color.Black),
-        onSurface = Color.White
-    )
-
-    // Copy the current [Typography] and replace some text styles for this theme.
-    val currentTypography = MaterialTheme.typography
-    val dialogTypography = currentTypography.copy(
-        body2 = currentTypography.body1.copy(
-            fontWeight = FontWeight.Normal,
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
-            letterSpacing = 1.sp
-        ),
-        button = currentTypography.button.copy(
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 0.2.em
-        )
-    )
-    MaterialTheme(colors = dialogColors, typography = dialogTypography, content = content)
+  MaterialTheme(
+    colorScheme = colors,
+    content = content
+  )
 }

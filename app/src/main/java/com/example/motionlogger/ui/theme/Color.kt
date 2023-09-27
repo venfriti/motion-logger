@@ -1,112 +1,68 @@
-/*
- * Copyright 2021 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.motionlogger.ui.theme
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Typography
-import androidx.compose.material.darkColors
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.em
-import androidx.compose.ui.unit.sp
 
-val Green500 = Color(0xFF1EB980)
-val DarkBlue900 = Color(0xFF26282F) // TODO: Confirm literal name
+val md_theme_light_primary = Color(0xFF6750A4)
+val md_theme_light_onPrimary = Color(0xFFFFFFFF)
+val md_theme_light_primaryContainer = Color(0xFFEADDFF)
+val md_theme_light_onPrimaryContainer = Color(0xFF21005D)
+val md_theme_light_secondary = Color(0xFF625B71)
+val md_theme_light_onSecondary = Color(0xFFFFFFFF)
+val md_theme_light_secondaryContainer = Color(0xFFE8DEF8)
+val md_theme_light_onSecondaryContainer = Color(0xFF1D192B)
+val md_theme_light_tertiary = Color(0xFF7D5260)
+val md_theme_light_onTertiary = Color(0xFFFFFFFF)
+val md_theme_light_tertiaryContainer = Color(0xFFFFD8E4)
+val md_theme_light_onTertiaryContainer = Color(0xFF31111D)
+val md_theme_light_error = Color(0xFFB3261E)
+val md_theme_light_onError = Color(0xFFFFFFFF)
+val md_theme_light_errorContainer = Color(0xFFF9DEDC)
+val md_theme_light_onErrorContainer = Color(0xFF410E0B)
+val md_theme_light_outline = Color(0xFF79747E)
+val md_theme_light_background = Color(0xFFFFFBFE)
+val md_theme_light_onBackground = Color(0xFF1C1B1F)
+val md_theme_light_surface = Color(0xFFFFFBFE)
+val md_theme_light_onSurface = Color(0xFF1C1B1F)
+val md_theme_light_surfaceVariant = Color(0xFFE7E0EC)
+val md_theme_light_onSurfaceVariant = Color(0xFF49454F)
+val md_theme_light_inverseSurface = Color(0xFF313033)
+val md_theme_light_inverseOnSurface = Color(0xFFF4EFF4)
+val md_theme_light_inversePrimary = Color(0xFFD0BCFF)
+val md_theme_light_shadow = Color(0xFF000000)
+val md_theme_light_surfaceTint = Color(0xFF6750A4)
+val md_theme_light_outlineVariant = Color(0xFFCAC4D0)
+val md_theme_light_scrim = Color(0xFF000000)
 
-@Composable
-fun AppTheme(content: @Composable () -> Unit) {
-    // Rally is always dark themed.
-    val colors = darkColors(
-        primary = Green500,
-        surface = DarkBlue900,
-        onSurface = Color.White,
-        background = DarkBlue900,
-        onBackground = Color.White
-    )
+val md_theme_dark_primary = Color(0xFFD0BCFF)
+val md_theme_dark_onPrimary = Color(0xFF381E72)
+val md_theme_dark_primaryContainer = Color(0xFF4F378B)
+val md_theme_dark_onPrimaryContainer = Color(0xFFEADDFF)
+val md_theme_dark_secondary = Color(0xFFCCC2DC)
+val md_theme_dark_onSecondary = Color(0xFF332D41)
+val md_theme_dark_secondaryContainer = Color(0xFF4A4458)
+val md_theme_dark_onSecondaryContainer = Color(0xFFE8DEF8)
+val md_theme_dark_tertiary = Color(0xFFEFB8C8)
+val md_theme_dark_onTertiary = Color(0xFF492532)
+val md_theme_dark_tertiaryContainer = Color(0xFF633B48)
+val md_theme_dark_onTertiaryContainer = Color(0xFFFFD8E4)
+val md_theme_dark_error = Color(0xFFF2B8B5)
+val md_theme_dark_onError = Color(0xFF601410)
+val md_theme_dark_errorContainer = Color(0xFF8C1D18)
+val md_theme_dark_onErrorContainer = Color(0xFFF9DEDC)
+val md_theme_dark_outline = Color(0xFF938F99)
+val md_theme_dark_background = Color(0xFF1C1B1F)
+val md_theme_dark_onBackground = Color(0xFFE6E1E5)
+val md_theme_dark_surface = Color(0xFF1C1B1F)
+val md_theme_dark_onSurface = Color(0xFFE6E1E5)
+val md_theme_dark_surfaceVariant = Color(0xFF49454F)
+val md_theme_dark_onSurfaceVariant = Color(0xFFCAC4D0)
+val md_theme_dark_inverseSurface = Color(0xFFE6E1E5)
+val md_theme_dark_inverseOnSurface = Color(0xFF313033)
+val md_theme_dark_inversePrimary = Color(0xFF6750A4)
+val md_theme_dark_shadow = Color(0xFF000000)
+val md_theme_dark_surfaceTint = Color(0xFFD0BCFF)
+val md_theme_dark_outlineVariant = Color(0xFF49454F)
+val md_theme_dark_scrim = Color(0xFF000000)
 
-    val typography = Typography(
-        defaultFontFamily = RobotoCondensed,
-        h1 = TextStyle(
-            fontWeight = FontWeight.W100,
-            fontSize = 96.sp
-        ),
-        h2 = TextStyle(
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 44.sp,
-            fontFamily = EczarFontFamily,
-            letterSpacing = 1.5.sp
-        ),
-        h3 = TextStyle(
-            fontWeight = FontWeight.W400,
-            fontSize = 14.sp
-        ),
-        h4 = TextStyle(
-            fontWeight = FontWeight.W700,
-            fontSize = 34.sp
-        ),
-        h5 = TextStyle(
-            fontWeight = FontWeight.W700,
-            fontSize = 24.sp
-        ),
-        h6 = TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 18.sp,
-            lineHeight = 20.sp,
-            fontFamily = EczarFontFamily,
-            letterSpacing = 3.sp
-        ),
-        subtitle1 = TextStyle(
-            fontWeight = FontWeight.Light,
-            fontSize = 14.sp,
-            lineHeight = 20.sp,
-            letterSpacing = 3.sp
-        ),
-        subtitle2 = TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            letterSpacing = 0.1.em
-        ),
-        body1 = TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
-            letterSpacing = 0.1.em
-        ),
-        body2 = TextStyle(
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp,
-            lineHeight = 20.sp,
-            letterSpacing = 0.1.em
-        ),
-        button = TextStyle(
-            fontWeight = FontWeight.Bold,
-            fontSize = 14.sp,
-            lineHeight = 16.sp,
-            letterSpacing = 0.2.em
-        ),
-        caption = TextStyle(
-            fontWeight = FontWeight.W500,
-            fontSize = 12.sp
-        ),
-        overline = TextStyle(
-            fontWeight = FontWeight.W500,
-            fontSize = 10.sp
-        )
-    )
-    MaterialTheme(colors = colors, typography = typography, content = content)
-}
+
+val seed = Color(0xFF6750A4)

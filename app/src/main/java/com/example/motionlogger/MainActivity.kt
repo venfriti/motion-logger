@@ -14,16 +14,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TextField
-import androidx.compose.material.darkColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PieChart
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,15 +40,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import com.example.motionlogger.ui.theme.AppTheme
-import com.example.motionlogger.ui.theme.Theme
+import com.example.motionlogger.ui.theme.MotionLoggerTheme
 import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
-            AppTheme {
+            MotionLoggerTheme {
                 AppScreen()
             }
         }
@@ -59,13 +58,13 @@ class MainActivity : ComponentActivity() {
 fun AppScreen(){
     Column {
         HeaderTab()
-        FullDialog()
+//        FullDialog()
     }
 }
 
 @Composable
 fun HeaderTab(modifier: Modifier = Modifier) {
-    Theme{
+    MotionLoggerTheme{
         Row(
             modifier = modifier
                 .padding(16.dp)
@@ -75,11 +74,12 @@ fun HeaderTab(modifier: Modifier = Modifier) {
         ) {
             Icon(imageVector = Icons.Filled.PieChart,
                 contentDescription = null,
-                tint = MaterialTheme.colors.onSurface)
+                tint = MaterialTheme.colorScheme.onSurface)
             Spacer(Modifier.width(12.dp))
             Text("MotionLogger",
-                color = MaterialTheme.colors.onSurface,
-                style = MaterialTheme.typography.h5)
+                color = MaterialTheme.colorScheme.onSurface,
+//                style = MaterialTheme.typography.h5
+            )
         }
     }
 }
@@ -95,7 +95,7 @@ fun InputDialog(modifier: Modifier = Modifier){
         TextField(
             value = "Enter Url",
             onValueChange = {},
-            textStyle = TextStyle(MaterialTheme.colors.onSurface)
+            textStyle = TextStyle(MaterialTheme.colorScheme.onSurface)
         )
         val onClickSeeAll = {}
         TextButton(
@@ -105,96 +105,77 @@ fun InputDialog(modifier: Modifier = Modifier){
         ) {
             Text(
                 text = "SEE ALL",
-                style = MaterialTheme.typography.button
+//                style = MaterialTheme.typography.button
             )
         }
     }
 }
 
-@Composable
-fun FullDialog(){
-    var isSending by remember { mutableStateOf(false) }
-
-    if (isSending){
-        RallyAlertDialog(
-            onDismiss = {
-                isSending = false
-            },
-            bodyText = "alertMessage",
-            buttonText = "Dismiss".uppercase(Locale.getDefault())
-        )
-    }
-
-    Column {
-        InputField {
-            isSending = true
-        }
-        RallyDivider(
-            modifier = Modifier.padding(start = mediumPadding, end = mediumPadding)
-        )
-    }
-}
+//@Composable
+//fun FullDialog(){
+//    var isSending by remember { mutableStateOf(false) }
+//
+//    if (isSending){
+//        RallyAlertDialog(
+//            onDismiss = {
+//                isSending = false
+//            },
+//            bodyText = "alertMessage",
+//            buttonText = "Dismiss".uppercase(Locale.getDefault())
+//        )
+//    }
+//
+//    Column {
+//        InputField {
+//            isSending = true
+//        }
+//        RallyDivider(
+//            modifier = Modifier.padding(start = mediumPadding, end = mediumPadding)
+//        )
+//    }
+//}
 
 @Composable
 fun RallyDivider(modifier: Modifier = Modifier) {
-    Divider(color = MaterialTheme.colors.background, thickness = 1.dp, modifier = modifier)
+    Divider(color = MaterialTheme.colorScheme.background, thickness = 1.dp, modifier = modifier)
 }
 
-@Composable
-fun RallyAlertDialog(
-    onDismiss: () -> Unit,
-    bodyText: String,
-    buttonText: String
-) {
-    RallyDialogThemeOverlay {
-        AlertDialog(
-            onDismissRequest = onDismiss,
-            text = { Text(bodyText) },
-            buttons = {
-                Column {
-                    Divider(
-                        Modifier.padding(horizontal = 12.dp),
-                        color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
-                    )
-                    TextButton(
-                        onClick = onDismiss,
-                        shape = RectangleShape,
-                        contentPadding = PaddingValues(mediumPadding),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(buttonText)
-                    }
-                }
-            }
-        )
-    }
-}
-
-@Composable
-fun RallyDialogThemeOverlay(content: @Composable () -> Unit) {
-    // Rally is always dark themed.
-    val dialogColors = darkColors(
-        primary = Color.White,
-        surface = Color.White.copy(alpha = 0.12f).compositeOver(Color.Black),
-        onSurface = Color.White
-    )
-
-    // Copy the current [Typography] and replace some text styles for this theme.
-    val currentTypography = MaterialTheme.typography
-    val dialogTypography = currentTypography.copy(
-        body2 = currentTypography.body1.copy(
-            fontWeight = FontWeight.Normal,
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
-            letterSpacing = 1.sp
-        ),
-        button = currentTypography.button.copy(
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 0.2.em
-        )
-    )
-    MaterialTheme(colors = dialogColors, typography = dialogTypography, content = content)
-}
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun RallyAlertDialog(
+//    onDismiss: () -> Unit,
+//    bodyText: String,
+//    buttonText: String
+//) {
+//    MaterialTheme {
+//        AlertDialog(
+//            onDismissRequest = onDismiss,
+//            modifier = Modifier,
+//            prop
+//        )
+//    }
+//}
+//
+//@Composable
+//fun content(){
+//    text = { Text(bodyText) },
+//    buttons = {
+//        Column {
+//            Divider(
+//                Modifier.padding(horizontal = 12.dp),
+//                color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
+//            )
+//            TextButton(
+//                onClick = onDismiss,
+//                shape = RectangleShape,
+//                contentPadding = PaddingValues(mediumPadding),
+//                modifier = Modifier.fillMaxWidth()
+//            ) {
+//                Text(buttonText)
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun InputField(onClickStart: () -> Unit){
@@ -206,7 +187,7 @@ fun InputField(onClickStart: () -> Unit){
     ) {
         Text(
             text = "Alerts",
-            style = MaterialTheme.typography.subtitle2,
+//            style = MaterialTheme.typography.subtitle2,
             modifier = Modifier.align(Alignment.CenterVertically)
         )
         TextButton(
@@ -216,7 +197,7 @@ fun InputField(onClickStart: () -> Unit){
         ) {
             Text(
                 text = "START",
-                style = MaterialTheme.typography.button
+//                style = MaterialTheme.typography.button
             )
         }
     }
@@ -231,7 +212,7 @@ fun InputDialogPreview(){
 @Preview
 @Composable
 fun HeaderTabPreview() {
-    Theme { HeaderTab(Modifier.padding(8.dp)) }
+    MaterialTheme { HeaderTab(Modifier.padding(8.dp)) }
 }
 
 private val mediumPadding = 16.dp
