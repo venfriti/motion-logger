@@ -80,7 +80,9 @@ fun MotionLoggerTheme(
   val colors = DarkColors
 
   MaterialTheme(
-    colorScheme = colors,
-    content = content
+      colorScheme = colors,
+      typography = typography,
+      shapes = shapes,
+      content = content
   )
 }

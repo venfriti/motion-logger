@@ -58,7 +58,9 @@ class MainActivity : ComponentActivity() {
 fun AppScreen(){
     Column {
         HeaderTab()
-//        FullDialog()
+        InputDialog()
+        RallyDivider()
+        TextDialog()
     }
 }
 
@@ -105,9 +107,25 @@ fun InputDialog(modifier: Modifier = Modifier){
         ) {
             Text(
                 text = "SEE ALL",
-//                style = MaterialTheme.typography.button
+                style = MaterialTheme.typography.titleMedium
             )
         }
+    }
+}
+
+@Composable
+fun TextDialog(modifier: Modifier = Modifier){
+    Row(
+        modifier = modifier
+            .padding(12.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Response",
+            color = MaterialTheme.colorScheme.background,
+            maxLines = 3
+        )
     }
 }
 
