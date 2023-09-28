@@ -41,6 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.example.motionlogger.ui.components.TopCard
 import com.example.motionlogger.ui.theme.DarkBlue900
 import com.example.motionlogger.ui.theme.MotionLoggerTheme
 import java.util.Locale
@@ -65,9 +66,7 @@ class MainActivity : ComponentActivity() {
 fun AppScreen(){
     Column {
         HeaderTab()
-        InputDialog()
-        RallyDivider()
-        TextDialog()
+        TopCard()
     }
 }
 
@@ -93,52 +92,8 @@ fun HeaderTab(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun TopCard(modifier: Modifier = Modifier) {
-}
 
-@Composable
-fun InputDialog(modifier: Modifier = Modifier){
-    Row(
-        modifier = modifier
-            .padding(12.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        TextField(
-            value = "Enter Url",
-            onValueChange = {},
-            textStyle = TextStyle(MaterialTheme.colorScheme.onSurface)
-        )
-        val onClickSeeAll = {}
-        TextButton(
-            onClick = onClickSeeAll,
-            contentPadding = PaddingValues(0.dp),
-            modifier = Modifier.align(Alignment.CenterVertically)
-        ) {
-            Text(
-                text = "SEE ALL",
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
-    }
-}
 
-@Composable
-fun TextDialog(modifier: Modifier = Modifier){
-    Row(
-        modifier = modifier
-            .padding(12.dp)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = "Response",
-            color = MaterialTheme.colorScheme.background,
-            maxLines = 3
-        )
-    }
-}
 
 //@Composable
 //fun FullDialog(){
@@ -163,11 +118,6 @@ fun TextDialog(modifier: Modifier = Modifier){
 //        )
 //    }
 //}
-
-@Composable
-fun RallyDivider(modifier: Modifier = Modifier) {
-    Divider(color = MaterialTheme.colorScheme.background, thickness = 1.dp, modifier = modifier)
-}
 
 //@OptIn(ExperimentalMaterial3Api::class)
 //@Composable
@@ -232,11 +182,7 @@ fun InputField(onClickStart: () -> Unit){
     }
 }
 
-@Preview
-@Composable
-fun InputDialogPreview(){
-    InputDialog()
-}
+
 
 @Preview
 @Composable
