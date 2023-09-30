@@ -1,7 +1,11 @@
 package com.example.motionlogger.ui.components
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,6 +34,13 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TopCard(modifier: Modifier = Modifier) {
     var isSending by remember { mutableStateOf(false) }
+    var cardElevation by remember { mutableStateOf(false) }
+
+    val elevation by animateFloatAsState(
+        targetValue = if (cardElevation) 8f else 0f,
+        animationSpec = tween(durationMillis = 300)
+    )
+
 
     var currentTargetElevation by remember { mutableStateOf(1.dp) }
     LaunchedEffect(Unit) {
@@ -49,7 +60,14 @@ fun TopCard(modifier: Modifier = Modifier) {
         label = "Card Animation"
     )
 
-    Card(elevation = CardDefaults.cardElevation(defaultElevation = animatedElevation.value)
+    Card(
+        shape = MaterialTheme.shapes.small,
+        modifier = Modifier
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+            .background(
+                MaterialTheme.colorScheme.scrim,
+                MaterialTheme.shapes.small
+            )
     ) {
         Column {
             AlertHeader {
@@ -67,6 +85,7 @@ fun TopCard(modifier: Modifier = Modifier) {
 fun AlertHeader(onClickSend: () -> Unit){
     Row(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.scrim)
             .padding(12.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -91,7 +110,13 @@ fun AlertHeader(onClickSend: () -> Unit){
 
 @Composable
 fun RallyDivider(modifier: Modifier = Modifier) {
-    Divider(color = MaterialTheme.colorScheme.background, thickness = 1.dp, modifier = modifier)
+    Divider(
+        color = MaterialTheme.colorScheme.background,
+        thickness = 1.dp,
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.scrim)
+            .padding(start = 16.dp, end = 16.dp)
+    )
 }
 
 
@@ -99,13 +124,14 @@ fun RallyDivider(modifier: Modifier = Modifier) {
 fun TextDialog(modifier: Modifier = Modifier){
     Row(
         modifier = modifier
+            .background(MaterialTheme.colorScheme.scrim)
             .padding(12.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             text = "Response",
-            color = MaterialTheme.colorScheme.background,
+            color = MaterialTheme.colorScheme.inverseSurface,
             maxLines = 3
         )
     }

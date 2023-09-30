@@ -75,7 +75,7 @@ fun HeaderTab(modifier: Modifier = Modifier) {
     MotionLoggerTheme{
         Row(
             modifier = modifier
-                .padding(16.dp)
+                .padding(top = 16.dp, start = 16.dp)
                 .animateContentSize()
                 .height(TabHeight)
                 .fillMaxWidth()
@@ -192,4 +192,4 @@ fun HeaderTabPreview() {
 
 private val mediumPadding = 16.dp
 
-private val TabHeight = 56.dp
+private val TabHeight = 45.dp
