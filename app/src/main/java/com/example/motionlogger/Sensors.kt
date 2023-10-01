@@ -12,7 +12,6 @@ class Sensors(context: Context, private val viewModel: MainViewModel) : SensorEv
     private val sensorManager: SensorManager = context
         .getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-    private val gyroscopeSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
     private val accelerometerSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     private val magnetometerSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
@@ -24,12 +23,6 @@ class Sensors(context: Context, private val viewModel: MainViewModel) : SensorEv
 
 
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor == gyroscopeSensor){
-            viewModel.gyroX.value = event.values[0]
-            viewModel.gyroY.value = event.values[1]
-            viewModel.gyroZ.value  = event.values[2]
-        }
-
         if (event.sensor == accelerometerSensor){
             viewModel.accelX.value = event.values[0]
             viewModel.accelY.value = event.values[1]
@@ -61,10 +54,6 @@ class Sensors(context: Context, private val viewModel: MainViewModel) : SensorEv
     }
 
     fun startListening() {
-        gyroscopeSensor?.let {
-            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
-        }
-
         accelerometerSensor?.let {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
         }
