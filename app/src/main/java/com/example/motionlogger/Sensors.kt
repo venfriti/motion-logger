@@ -12,51 +12,54 @@ class Sensors(context: Context, private val viewModel: MainViewModel) : SensorEv
     private val sensorManager: SensorManager = context
         .getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-    private val gyroscopeSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
     private val accelerometerSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-    private val rotationSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+    private val magnetometerSensor: Sensor? = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
     private val rotationMatrix = FloatArray(9)
+    private val inclinationMatrix = FloatArray(9)
     private val orientationAngles = FloatArray(3)
+    private val accelAngles = FloatArray(3)
+    private val magnetAngles = FloatArray(3)
 
     override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor == gyroscopeSensor){
-            viewModel.gyroX.value = event.values[0]
-            viewModel.gyroY.value = event.values[1]
-            viewModel.gyroZ.value  = event.values[2]
-        }
 
         if (event.sensor == accelerometerSensor){
             viewModel.accelX.value = event.values[0]
             viewModel.accelY.value = event.values[1]
             viewModel.accelZ.value = event.values[2]
+            accelAngles[0] = event.values[0]
+            accelAngles[1] = event.values[1]
+            accelAngles[2] = event.values[2]
         }
 
-        if (event.sensor == rotationSensor){
-            val rotationVector = event.values
+        if (event.sensor == magnetometerSensor){
+            magnetAngles[0] = event.values[0]
+            magnetAngles[1] = event.values[1]
+            magnetAngles[2] = event.values[2]
+        }
 
-            SensorManager.getRotationMatrixFromVector(rotationMatrix, rotationVector)
+        if (accelerometerSensor != null || magnetometerSensor != null){
+            val gravity = floatArrayOf(accelAngles[0], accelAngles[1], accelAngles[2])
+            val geomagnetic = floatArrayOf(magnetAngles[0], magnetAngles[1], magnetAngles[2])
+
+            SensorManager.getRotationMatrix(rotationMatrix, inclinationMatrix, gravity, geomagnetic)
             SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-            viewModel.rotX.value = Math.toDegrees(orientationAngles[0].toDouble()).toFloat()
-            viewModel.rotY.value = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
-            viewModel.rotZ.value = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
+            viewModel.rotZ.value = Math.toDegrees(orientationAngles[0].toDouble()).toFloat()
+            viewModel.rotX.value = Math.toDegrees(orientationAngles[1].toDouble()).toFloat()
+            viewModel.rotY.value = Math.toDegrees(orientationAngles[2].toDouble()).toFloat()
 
         }
 
     }
 
     fun startListening() {
-        gyroscopeSensor?.let {
-            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
-        }
-
         accelerometerSensor?.let {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
         }
 
-        rotationSensor?.let {
-            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+        magnetometerSensor?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
         }
     }
 

@@ -12,10 +12,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class MainViewModel : ViewModel(){
-    // TODO: Implement the ViewModel
-    var gyroX = MutableLiveData<Float>()
-    var gyroY = MutableLiveData<Float>()
-    var gyroZ = MutableLiveData<Float>()
 
     var accelX = MutableLiveData<Float>()
     var accelY = MutableLiveData<Float>()
